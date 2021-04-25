@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../partials/head'); %>
+    </head>
+    <body class="container">
+        <header>
+            <%- include('../partials/header', {active: 'index'}); %>
+        </header>
+        <main>
+            <div class="jumbotron">
+                <h1><span class="badge bg-warning">Dashboard</span></h1>
+                <p>
+                    <span class="badge bg-primary">BTC: <%= prices.BTC %></span>
+                    <span class="badge bg-secondary">ETH: <%= prices.ETH %></span>
+                    <span class="badge bg-success">BNB: <%= prices.BNB %></span>
+                </p>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</td>
+                            <th>Currency</td>
+                            <th>USDT</td>
+                            <th>Average Ticket (USDT)</td>
+                            <th>Average Percent (%)</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <% balances.forEach((balance, index) => { %>
+                        <tr>
+                            <td><%= index+1 %></td>
+                            <td><%= balance.symbol %></td>
+                            <td><%= balance.symbolUSD %></td>
+                            <td><%= balance.averageTicket %></td>
+                            <td><%= balance.averagePercent %> %</td>
+                        </tr>
+                    <% }) %>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>#</td>
+                            <th>-</td>
+                            <th>-</td>
+                            <th>-</td>
+                            <th><%= totalBalances.average %> %</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </main>
+        <footer>
+            <%- include('../partials/footer'); %>
+        </footer>
+    </body>
+</html>

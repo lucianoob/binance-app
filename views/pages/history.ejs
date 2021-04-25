@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../partials/head'); %>
+    </head>
+    <body class="container">
+        <header>
+            <%- include('../partials/header', {active: 'history'}); %>
+        </header>
+        <main>
+            <div class="jumbotron">
+                <h1><span class="badge bg-warning">History</span></h1>
+                <% Object.keys(historys).forEach((symbol, index) => { %>
+                    <h3><span class="badge bg-dark"><%= symbol %></span></h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</td>
+                                <th>Date</td>
+                                <th>Qty</td>
+                                <th>Price</td>
+                                <th>Total (USDT)</td>
+                            </tr>
+                        </thead>
+                        <% totalQty = 0; %>
+                        <% totalQuoteQty = 0; %>
+                        <% countPrice = 0; %>
+                        <% sumPrice = 0; %>
+                        <tbody>
+                            <% historys[symbol].forEach((history, item) => { %>
+                                <% totalQty += (history.isBuyer ? 1 : -1) * history.qty %>
+                                <% totalQuoteQty += (history.isBuyer ? 1 : -1) * history.quoteQtyrs %>
+                                <% countPrice++ %>
+                                <% sumPrice += parseFloat(history.price) %>
+                                <tr>
+                                    <td><%= item+1 %></td>
+                                    <td><%= new Date(history.time).toLocaleDateString("pt-BR") %> <%= new Date(history.time).toLocaleTimeString("pt-BR") %></td>
+                                    <td><%= (history.isBuyer ? 1 : -1) * history.qty %></td>
+                                    <td><%= history.price %></td>
+                                    <td><%= (history.isBuyer ? 1 : -1) * history.quoteQty %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>#</td>
+                                <td>-</td>
+                                <td><%= totalQty %></td>
+                                <td><%= sumPrice/countPrice %></td>
+                                <td><%= totalQuoteQty %></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                <% }) %>
+            </div>
+        </main>
+        <footer>
+            <%- include('../partials/footer'); %>
+        </footer>
+    </body>
+</html>
