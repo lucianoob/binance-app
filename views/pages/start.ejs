@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../partials/head'); %>
+    </head>
+    <body class="container">
+        <header>
+            <%- include('../partials/header', {active: 'index'}); %>
+        </header>
+        <main>
+            <div class="jumbotron">
+                <h1><span class="badge bg-warning">Start</span></h1>
+                <p>Enter yours API key and secret to save temporary in your local browser.</p>
+                <form method="POST">
+                    <div class="form-group mt-3">
+                      <label for="textApiKey">API KEY</label>
+                      <input type="text" class="form-control my-1" name="textApiKey" id="textApiKey" aria-describedby="apiKeyHelp" placeholder="Enter API key">
+                      <small id="apiKeyHelp" class="form-text text-muted">Insert Binance API key</small>
+                    </div>
+                    <div class="form-group mt-3">
+                      <label for="textApiSecretKey">API SECRET KEY</label>
+                      <input type="text" class="form-control my-1" name="textApiSecretKey" id="textApiSecretKey" aria-describedby="apiSecretKeyHelp" placeholder="Enter API key">
+                      <small id="apiSecretKeyHelp" class="form-text text-muted">Insert Binance API secret key</small>
+                    </div>
+                    <hr>
+                    <button type="submit" class="btn btn-primary mt-3">Save</button>
+                  </form>
+            </div>
+        </main>
+        <footer>
+            <%- include('../partials/footer'); %>
+        </footer>
+    </body>
+</html>

@@ -2,30 +2,34 @@ const routes = require('express').Router();
 const BinanceAPI = require('../lib/binance');
 const { formatToUSD, formatToCurrency } = require('../lib/formats');
 const { sortArrayObjects } = require('../lib/utils');
-const binance = new BinanceAPI();
+let binance = null;
 
 const history = (request, response) => {
+    binance = new BinanceAPI();
     binance.balance(async (error, balances) => {
       if (error) {
-        return console.error(error);
-      }
-
-      const symbols = [];
-      Object.keys(balances).forEach((symbol) => {
-        const availableAmount = parseFloat(balances[symbol].available);
-        const orderAmount = parseFloat(balances[symbol].onOrder);
-        if(availableAmount > 0 || orderAmount > 0) {
-          if(symbol !== 'USDT') {
-            symbols.push(symbol);
+        const errorObj = JSON.parse(error.body);
+        response.render('pages/error', {
+          error: `${errorObj.msg} [${errorObj.code}]`
+        });
+      } else {
+        const symbols = [];
+        Object.keys(balances).forEach((symbol) => {
+          const availableAmount = parseFloat(balances[symbol].available);
+          const orderAmount = parseFloat(balances[symbol].onOrder);
+          if(availableAmount > 0 || orderAmount > 0) {
+            if(symbol !== 'USDT') {
+              symbols.push(symbol);
+            }
           }
-        }
-      });
+        });
 
-      const historys = await trades(symbols.sort());
+        const historys = await trades(symbols.sort());
 
-      response.render('pages/history', {
-        historys: historys
-      });
+        response.render('pages/history', {
+          historys: historys
+        });
+      }
     });
 };
 
