@@ -4,6 +4,3 @@
 # Node local folder and files
 node_modules/
 package-lock.json
-
-# Node Localstorage
-localstorage/

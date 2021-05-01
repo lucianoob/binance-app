@@ -1,13 +1,13 @@
-const LocalStorage = require('node-localstorage').LocalStorage;
-localStorage = new LocalStorage('./localstorage');
+const cookie = require('cookie');
 
 const BINANCE_API_KEY = 'API_KEY';
 const BINANCE_API_SECRET = 'API_SECRET_KEY';
-
+const cookieValid = 60 * 60 * 24 * 7;
 
 const config = (request, response, next) => {
-    const binanceApiKey = localStorage.getItem(BINANCE_API_KEY);
-    const binanceApiSecret = localStorage.getItem(BINANCE_API_SECRET);
+    const cookies = cookie.parse(request.headers.cookie || '');
+    const binanceApiKey = cookies[BINANCE_API_KEY];
+    const binanceApiSecret = cookies[BINANCE_API_SECRET];
 
     if(binanceApiKey && binanceApiSecret) {
         process.env['API_KEY'] = binanceApiKey;
@@ -23,8 +23,14 @@ const config = (request, response, next) => {
             process.env['API_KEY'] = apiKey;
             process.env['API_SECRET_KEY'] = apiSecret;
 
-            localStorage.setItem(BINANCE_API_KEY, apiKey);
-            localStorage.setItem(BINANCE_API_SECRET, apiSecret);
+            response.setHeader('Set-Cookie', [
+                cookie.serialize(BINANCE_API_KEY, apiKey, {
+                    maxAge: cookieValid
+                }),
+                cookie.serialize(BINANCE_API_SECRET, apiSecret, {
+                    maxAge: cookieValid
+                })
+            ]);
 
             response.redirect('/');
         } else {
