@@ -1,6 +1,6 @@
 {
   "name": "binance-app",
-  "version": "1.88.0",
+  "version": "1.90.0",
   "description": "",
   "scripts": {
     "start": "node server.js",

@@ -16,7 +16,7 @@ Os componentes utilizados neste projeto são:
 - EJS v3.1.6
 - Express v4.17.1
 - Node Binance API v0.12.5
-- Node Localstorage v2.1.6
+- Cookie v0.4.1
 - Nodemon v2.0.7
 
 
@@ -44,6 +44,10 @@ Este teste tem as seguintes funcionalidades:
     - Dashboard: os seus tokens e seu ticket médio em cada um deles.
     - Wallet: os seus tokens em sua carteira e suas ordens pendentes.
     - History: o seu histórico considerando as suas moedas em sua carteira.
+
+### Demonstração
+Acesse um exemplo do app publicado no Google Cloud:
+- [https://binanceapp-312300.uc.r.appspot.com/](https://binanceapp-312300.uc.r.appspot.com/)
 
 ## Telas
 
